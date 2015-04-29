@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+    <link rel="stylesheet" href="css/jquery-ui.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/jquery.mobile-1.4.5.min.js"></script>
+    
+    <title>BOUTIQUE FINAL</title>
+    
+    <script type="text/javascript">
+        $(document).ready(function inicio(){
+            
+        var btnGuardar=$("#guardar");
+        btnGuardar.click(function guardar(){
+            var color = $("#color").val();
+            var talla = $("#talla").val();
+            var sexo = $("#sexo").val();
+            $.ajax({
+                type:"POST",
+                url:"gardarProductos.php",
+                data:"color="+color+"&talla="+talla+"&sexo="+sexo,
+                success: registro
+            });
+            function registro(datos) {
+                alert (datos);
+            }
+        });
+        
+        var btnconsPros = $("#consPros");
+        btnconsPros.click(function consTodos(){
+            $.ajax({
+            type:"POST",
+            url:"consultarTodos.php",
+            data:"",
+            success: todoProductos
+        });
+            
+        function todoProductos(datos){
+        var todosReg=$.parseJSON(datos);   
+        var respuesta=$("#contenido");
+        crearTabla(respuesta, todosReg);
+        }
+        });
+        
+        function crearTabla(respuesta, todosReg){
+            respuesta.html("");
+            respuesta.append('<table id="tab" border="1">');
+            var tabla=$("#tab");
+            tabla.html("<tr><th>ID</th><th>Color</th><th>Talla</th><th>Sexo</th></tr>");
+            for(var i in todosReg){
+                tabla.append("<tr><td>"+todosReg[i].Id_Producto+"</td>"
+                             +"<td>"+todosReg[i].Color+"</td>"
+                             +"<td>"+todosReg[i].Talla+"</td>"
+                             +"<td>"+todosReg[i].Sexo+"</td></tr>");
+                }
+                tabla.append("</table>");
+                }
+        
+        var btnconsInvi = $("#consInvi");
+        btnconsInvi.click(function consIndividual(){
+        var id = $("#idCons").val();
+        $.ajax({
+            type:"POST",
+            url:"consultaUno.php",
+            data:"Id="+id,
+            success: unProducto
+            });
+        
+        function unProducto(datos) {
+            var unReg=$.parseJSON(datos);
+            var respuesta2=$("#conten");
+            crearTabla(respuesta2, unReg);
+        }
+        });
+        
+        var btnmosTodo = $("#mosTodo");
+        btnmosTodo.click(function todoEliminar(){
+            $.ajax({
+            type:"POST",
+            url:"consultarTodos.php",
+            data:"",
+            success: todoEliminar
+        });
+            
+        function todoEliminar(datos){
+        var todosReg=$.parseJSON(datos);   
+        var respuesta=$("#todoElim");
+        crearTabla(respuesta, todosReg);
+        }
+        });
+        
+        var btnidEliminar = $("#idEliminar");
+        btnidEliminar.click(function proEliminar(){
+        var id = $("#idElimi").val();
+        $.ajax({
+           type:"POST",
+           url:"eliminarProduc.php",
+           data:"Id="+id,
+           success: eliminacion
+        });
+        
+        function eliminacion(datos) {
+            alert(datos);
+        }
+        });
+        
+        var btntodAct = $("#todAct");
+        btntodAct.click(function actDatos(){
+            $.ajax({
+               type:"POST",
+               url:"consultarTodos.php",
+               data:"",
+               success: todosActualizar
+            });
+        function todosActualizar(datos) {
+            var todosRegis=$.parseJSON(datos);
+            var respues=$("#conActuali");
+            crearTabla(respues, todosRegis);
+        }
+        });
+        
+        var btnmosDat = $("#mosDat");
+        btnmosDat.click(function mosDatos(){
+        var Id =  parseInt($("#idActuc").val());
+        $.ajax({
+            type:"POST",
+            url:"consultaUno.php",
+            data:"Id="+Id,
+            success: actuDatos
+            });
+        function actuDatos(datos) {
+            var datActu=$.parseJSON(datos);
+            var respDatos=$("#datMost");
+            respDatos.html("<label>Id:</label><input type='text' id='Id3' disabled='yes'>");
+            respDatos.append("<label>Color:</label><input type='text' id='color3'>");
+            respDatos.append("<label>Talla:</label><input type='text' id='talla3'>");
+            respDatos.append("<label>Sexo:</label><input type='text' id='sexo3'>");
+            var Id=$("#Id3");
+            var color=$("#color3");
+            var talla=$("#talla3");
+            var sexo=$("#sexo3");
+            for(var i in datActu){
+            Id.val(datActu[i].Id_Producto);
+            color.val(datActu[i].Color);
+            talla.val(datActu[i].Talla);
+            sexo.val(datActu[i].Sexo);
+            }
+            }
+            var btnactualDat = $("#actualDat");
+            btnactualDat.click(function actuaDatos(){
+                var ID = parseInt($("#Id3").val());
+                var color = $("#color3").val();
+                var talla = $("#talla3").val();
+                var sexo = $("#sexo3").val();
+                if (color=="" || talla=="" || sexo=="") {
+                    alert ("ingresar datos en todos los campos");
+                }else{
+                $.ajax({
+                   type:"POST",
+                   url:"actualizar.php",
+                   data:"Id="+ID+"&color="+color+"&talla="+talla+"&sexo="+sexo,
+                   success: actualizarDatoss
+                });
+                }
+                function actualizarDatoss(datos) {
+                    alert(datos);
+                }
+            });
+            
+        });
+        
+        });
+        
+        <!-------------------------------SEGUNDA------------------------------------------------->
+        $(document).ready(function inicio(){
+            
+        var btnGuardar2=$("#guardar2");
+        btnGuardar2.click(function guardar2(){
+            var colorr = $("#colorr5").val();
+            var marcaa = $("#marcaa5").val();
+            var tallaa = $("#tallaa5").val();
+            $.ajax({
+                type:"POST",
+                url:"gardarProductos2.php",
+                data:"colorr5="+colorr+"&marcaa5="+marcaa+"&tallaa5="+tallaa,
+                success: registro2
+            });
+            function registro2(datos) {
+                alert (datos);
+            }
+        });
+        
+        var btnconsPros2 = $("#consPros2");
+        btnconsPros2.click(function consTodos2(){
+            $.ajax({
+            type:"POST",
+            url:"consultarTodos2.php",
+            data:"",
+            success: todoProductos2
+        });
+            
+        function todoProductos2(datos){
+        var todosReg2=$.parseJSON(datos);   
+        var respuesta2=$("#contenido2");
+        crearTabla(respuesta2, todosReg2);
+        }
+        });
+        
+        function crearTabla(respuesta2, todosReg2){
+            respuesta2.html("");
+            respuesta2.append('<table id="tab" border="1">');
+            var tabla=$("#tab");
+            tabla.html("<tr><th>ID</th><th>Colorr</th><th>Marcaa</th><th>Tallaa</th></tr>");
+            for(var i in todosReg2){
+                tabla.append("<tr><td>"+todosReg2[i].Id_Precio+"</td>"
+                             +"<td>"+todosReg2[i].Colorr+"</td>"
+                             +"<td>"+todosReg2[i].Marcaa+"</td>"
+                             +"<td>"+todosReg2[i].Tallaa+"</td></tr>");
+                }
+                tabla.append("</table>");
+                }
+        
+        var btnconsInvi2 = $("#consInvi2");
+        btnconsInvi2.click(function consIndividual2(){
+        var id = $("#idCons2").val();
+        $.ajax({
+            type:"POST",
+            url:"consultaUno2.php",
+            data:"Id="+id,
+            success: unProducto2
+            });
+        
+        function unProducto2(datos) {
+            var unReg2=$.parseJSON(datos);
+            var respuesta2=$("#conten2");
+            crearTabla(respuesta2, unReg2);
+        }
+        });
+        
+       var btnmosTodo2 = $("#mosTodo2");
+        btnmosTodo2.click(function todoEliminar2(){
+            $.ajax({
+            type:"POST",
+            url:"consultarTodos2.php",
+            data:"",
+            success: todoEliminar2
+            
+        });
+            
+        function todoEliminar2(datos){
+        var todosReg2=$.parseJSON(datos);
+        var respuesta2=$("#todoElim2");
+        crearTabla(respuesta2, todosReg2);
+        
+        }
+        });
+        
+        var btnidEliminar2 = $("#idEliminar2");
+        btnidEliminar2.click(function proEliminar2(){
+        var id = $("#idElimi2").val();
+        $.ajax({
+           type:"POST",
+           url:"eliminarProduc2.php",
+           data:"Id="+id,
+           success: eliminacion2
+        });
+        
+        function eliminacion2(datos) {
+            alert(datos);
+        }
+        });
+        
+        
+        var btntodAct2 = $("#todAct2");
+        btntodAct2.click(function actDatos2(){
+            $.ajax({
+               type:"POST",
+               url:"consultarTodos2.php",
+               data:"",
+               success: todosActualizar2
+            });
+        function todosActualizar2(datos) {
+            var todosRegis2=$.parseJSON(datos);
+            var respues2=$("#conActuali2");
+            crearTabla(respues2, todosRegis2);
+        }
+        });
+        
+        var btnmosDat2 = $("#mosDat2");
+        btnmosDat2.click(function mosDatos2(){
+        var Id =  parseInt($("#idActuc2").val());
+        $.ajax({
+            type:"POST",
+            url:"consultaUno2.php",
+            data:"Id="+Id,
+            success: actuDatos2
+            });
+        function actuDatos2(datos) {
+            var datActu2=$.parseJSON(datos);
+            var respDatos2=$("#datMost2");
+            respDatos2.html("<label>Id:</label><input type='text' id='Id5' disabled='yes'>");
+            respDatos2.append("<label>Colorr:</label><input type='text' id='colorr5'>");
+            respDatos2.append("<label>Marcaa:</label><input type='text' id='marcaa5'>");
+            respDatos2.append("<label>Tallaa:</label><input type='text' id='tallaa5'>");
+            var Id=$("#Id5");
+            var colorr=$("#colorr5");
+            var marcaa=$("#marcaa5");
+            var tallaa=$("#tallaa5");
+            for(var i in datActu2){
+            Id.val(datActu2[i].Id_Precio);
+            colorr.val(datActu2[i].Colorr);
+            marcaa.val(datActu2[i].Marcaa);
+            tallaa.val(datActu2[i].Tallaa);
+            }
+            }
+            var btnactualDat2 = $("#actualDat2");
+            btnactualDat2.click(function actuaDatos2(){
+                var ID = parseInt($("#Id5").val());
+                var colorr = $("#colorr5").val();
+                var marcaa = $("#marcaa5").val();
+                var tallaa = $("#tallaa5").val();
+                if (colorr=="" || marcaa=="" || tallaa=="") {
+                    alert ("ingresar datos en todos los campos");
+                }else{
+                $.ajax({
+                   type:"POST",
+                   url:"actualizar2.php",
+                   data:"Id="+ID+"&colorr="+colorr+"&marcaa="+marcaa+"&tallaa="+tallaa,
+                   success: actualizarDatoss2
+                });
+                }
+                function actualizarDatoss2(datos) {
+                    alert(datos);
+                }
+            });
+            
+        });
+        
+        });
+
+    </script>
+    
+    <style type="text/css">
+        p{
+            text-align: center;
+        }
+    </style>
+    
+</head>
+
+<body>
+    <div data-role="page" id="principal2">
+        <div data-role="header">
+            <p>Pagina principal</p>
+        </div>
+        <div data-role="content">
+            <div>
+                <ul data-role="listview">
+                   <li><a href="#principal">ropa</a></li>
+                   <li><a href="#principal3">Calzado</a></li>
+                   
+                </ul>
+            </div>
+        </div>
+        <div data-role="footer">
+            <p>Derechos reservados</p>
+        </div>
+    </div>
+
+    <!-------------------------------------PRIMERA---------------------------->
+
+    
+    <div data-role="page" id="principal">
+        <div data-role="header">
+            <p>Pagina principal</p>
+        </div>
+        <div data-role="content">
+            <div>
+                <ul data-role="listview">
+                   <li><a href="#regPro">Registro de productos</a></li>
+                   <li><a href="#conPros">Consultar productos</a></li>
+                   <li><a href="#conPro">Consultar un producto</a></li>
+                   <li><a href="#eliPro">Eliminar producto</a></li>
+                   <li><a href="#actPro">Actualizar productos</a></li>
+                </ul>
+            </div>
+        </div>
+        <div data-role="footer">
+            <p>Derechos reservados</p>
+        </div>
+    </div>
+
+    <div data-role="page" id="regPro">
+        <div data-role="header">
+            <p>REGISTRO DE PRODUCTOS</p>
+        </div>
+        <div data-role="content">
+            <label for="color">Color:</label>
+            <input type="text" id="color">
+            <label for="talla">Talla:</label>
+            <input type="text" id="talla">
+            <label for="sexo">Sexo:</label>
+            <input type="text" id="sexo">
+                
+            <input type="button" id="guardar" value="Guardar">
+        </div>
+        <div data-role="footer">
+            <p>Derechos reservados</p>
+        </div>
+    </div>
+    
+    <div data-role="page" id="conPros">
+        <div data-role="header">
+            <p>CONSULTAR TODOS LOS PRODUCTOS</p>
+        </div>
+        <div data-role="content">
+            <input type="button" id="consPros" value="Consultar">
+            <div id="contenido"></div>
+        </div>
+        <div data-role="footer">
+            <p>Derechos reservados</p>
+        </div>
+    </div>
+    
+    <div data-role="page" id="conPro">
+        <div data-role="header">
+            <p>CONSULTAR PRODUCTO INDIVIDUAL</p>
+        </div>
+        <div data-role="content">
+            <label for="idCons">Id a consultar:</label>
+            <input type="text" id="idCons">
+            <input type="button" id="consInvi" value="Consultar">
+            <div id="conten"></div>
+        </div>
+        <div data-role="footer">
+            <p>Derechos reservados</p>
+        </div>
+    </div>
+    
+    <div data-role="page" id="eliPro">
+        <div data-role="header">
+            <p>ELIMINAR PRODUCTO</p>
+        </div>
+        <div data-role="content">
+            <input type="button" id="mosTodo" value="Todos los productos">
+            <div id="todoElim"></div>
+            <label for="idElimi">Id a eliminar</label>
+            <input type="text" id="idElimi">
+            <input type="button" id="idEliminar" value="Eliminar">
+            
+        </div>
+        <div data-role="footer">
+            <p>Derechos reservados</p>
+        </div>
+    </div>
+    
+    <div data-role="page" id="actPro">
+        <div data-role="header">
+            <p>ACTUALIZAR PRODUCTOS</p>
+        </div>
+        <div data-role="content">
+            <input type="button" id="todAct" value="Todos los productos">
+            <div id="conActuali"></div>
+            
+            <label for="idActu">Id a modificar:</label>
+            <input type="text" id="idActuc">
+            <input type="button" id="mosDat" value="Mostrar datos">
+            <div id="datMost"></div>
+            
+            <input type="button" id="actualDat" value="Actualizar">
+            
+        </div>
+        <div data-role="footer">
+            <p>Derechos Reservados</p>
+        </div>
+    </div>
+    <!---------------------------------SEGUNDA-------------------------------------------->
+     <div data-role="page" id="principal3">
+        <div data-role="header">
+            <p>Pagina principal</p>
+        </div>
+        <div data-role="content">
+            <div>
+                <ul data-role="listview">
+                   <li><a href="#regPro2">Registro de productos</a></li>
+                   <li><a href="#conPros2">Consultar productos</a></li>
+                   <li><a href="#conPro2">Consultar un producto</a></li>
+                   <li><a href="#eliPro2">Eliminar producto</a></li>
+                   <li><a href="#actPro2">Actualizar productos</a></li>
+                </ul>
+            </div>
+        </div>
+        <div data-role="footer">
+            <p>Derechos reservados</p>
+        </div>
+    </div>
+
+    <div data-role="page" id="regPro2">
+        <div data-role="header">
+            <p>REGISTRO DE PRODUCTOS</p>
+        </div>
+        <div data-role="content">
+            <label for="colorr">Colorr:</label>
+            <input type="text" id="colorr">
+            <label for="marcaa">Marcaa:</label>
+            <input type="text" id="marcaa">
+            <label for="Tallaa">Tallaa:</label>
+            <input type="text" id="tallaa">
+                
+            <input type="button" id="guardar2" value="Guardar">
+        </div>
+        <div data-role="footer">
+            <p>Derechos reservados</p>
+        </div>
+    </div>
+    
+    <div data-role="page" id="conPros2">
+        <div data-role="header">
+            <p>CONSULTAR TODOS LOS PRODUCTOS</p>
+        </div>
+        <div data-role="content">
+            <input type="button" id="consPros2" value="Consultar">
+            <div id="contenido2"></div>
+        </div>
+        <div data-role="footer">
+            <p>Derechos reservados</p>
+        </div>
+    </div>
+    
+    <div data-role="page" id="conPro2">
+        <div data-role="header">
+            <p>CONSULTAR PRODUCTO INDIVIDUAL</p>
+        </div>
+        <div data-role="content">
+            <label for="idCons2">Id a consultar:</label>
+            <input type="text" id="idCons2">
+            <input type="button" id="consInvi2" value="Consultar">
+            <div id="conten2"></div>
+        </div>
+        <div data-role="footer">
+            <p>Derechos reservados</p>
+        </div>
+    </div>
+    
+    <div data-role="page" id="eliPro2">
+        <div data-role="header">
+            <p>ELIMINAR PRODUCTO</p>
+        </div>
+        <div data-role="content">
+            <input type="button" id="mosTodo2" value="Todos los productos">
+            <div id="todoElim2"></div>
+            <label for="idElimi2">Id a eliminar</label>
+            <input type="text" id="idElimi2">
+            <input type="button" id="idEliminar2" value="Eliminar">
+            
+        </div>
+        <div data-role="footer">
+            <p>Derechos reservados</p>
+        </div>
+    </div>
+    
+    <div data-role="page" id="actPro2">
+        <div data-role="header">
+            <p>ACTUALIZAR PRODUCTOS</p>
+        </div>
+        <div data-role="content">
+            <input type="button" id="todAct2" value="Todos los productos">
+            <div id="conActuali2"></div>
+            
+            <label for="idActu2">Id a modificar:</label>
+            <input type="text" id="idActuc2">
+            <input type="button" id="mosDat2" value="Mostrar datos">
+            <div id="datMost2"></div>
+            
+            <input type="button" id="actualDat2" value="Actualizar">
+            
+        </div>
+        <div data-role="footer">
+            <p>Derechos Reservados</p>
+        </div>
+    </div>
+</body>
+</html>
