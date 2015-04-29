@@ -35,7 +35,7 @@
         btnconsPros.click(function consTodos(){
             $.ajax({
             type:"POST",
-            url:"consultarTodos.php",
+            url:"http://lizbethcr.260md.net/consultarTodos.php",
             data:"",
             success: todoProductos
         });
@@ -66,7 +66,7 @@
         var id = $("#idCons").val();
         $.ajax({
             type:"POST",
-            url:"consultaUno.php",
+            url:"http://lizbethcr.260md.net/consultaUno.php",
             data:"Id="+id,
             success: unProducto
             });
@@ -82,7 +82,7 @@
         btnmosTodo.click(function todoEliminar(){
             $.ajax({
             type:"POST",
-            url:"consultarTodos.php",
+            url:"http://lizbethcr.260md.net/consultarTodos.php",
             data:"",
             success: todoEliminar
         });
@@ -99,7 +99,7 @@
         var id = $("#idElimi").val();
         $.ajax({
            type:"POST",
-           url:"eliminarProduc.php",
+           url:"http://lizbethcr.260md.net/eliminarProduc.php",
            data:"Id="+id,
            success: eliminacion
         });
@@ -113,7 +113,7 @@
         btntodAct.click(function actDatos(){
             $.ajax({
                type:"POST",
-               url:"consultarTodos.php",
+               url:"http://lizbethcr.260md.net/consultarTodos.php",
                data:"",
                success: todosActualizar
             });
@@ -129,7 +129,7 @@
         var Id =  parseInt($("#idActuc").val());
         $.ajax({
             type:"POST",
-            url:"consultaUno.php",
+            url:"http://lizbethcr.260md.net/consultaUno.php",
             data:"Id="+Id,
             success: actuDatos
             });
@@ -162,7 +162,7 @@
                 }else{
                 $.ajax({
                    type:"POST",
-                   url:"actualizar.php",
+                   url:"http://lizbethcr.260md.net/actualizar.php",
                    data:"Id="+ID+"&color="+color+"&talla="+talla+"&sexo="+sexo,
                    success: actualizarDatoss
                 });
@@ -186,7 +186,7 @@
             var tallaa = $("#tallaa5").val();
             $.ajax({
                 type:"POST",
-                url:"gardarProductos2.php",
+                url:"http://lizbethcr.260md.net/gardarProductos2.php",
                 data:"colorr5="+colorr+"&marcaa5="+marcaa+"&tallaa5="+tallaa,
                 success: registro2
             });
@@ -199,7 +199,7 @@
         btnconsPros2.click(function consTodos2(){
             $.ajax({
             type:"POST",
-            url:"consultarTodos2.php",
+            url:"http://lizbethcr.260md.net/consultarTodos2.php",
             data:"",
             success: todoProductos2
         });
@@ -230,7 +230,7 @@
         var id = $("#idCons2").val();
         $.ajax({
             type:"POST",
-            url:"consultaUno2.php",
+            url:"http://lizbethcr.260md.net/consultaUno2.php",
             data:"Id="+id,
             success: unProducto2
             });
@@ -246,7 +246,7 @@
         btnmosTodo2.click(function todoEliminar2(){
             $.ajax({
             type:"POST",
-            url:"consultarTodos2.php",
+            url:"http://lizbethcr.260md.net/consultarTodos2.php",
             data:"",
             success: todoEliminar2
             
@@ -265,7 +265,7 @@
         var id = $("#idElimi2").val();
         $.ajax({
            type:"POST",
-           url:"eliminarProduc2.php",
+           url:"http://lizbethcr.260md.net/eliminarProduc2.php",
            data:"Id="+id,
            success: eliminacion2
         });
@@ -280,7 +280,7 @@
         btntodAct2.click(function actDatos2(){
             $.ajax({
                type:"POST",
-               url:"consultarTodos2.php",
+               url:"http://lizbethcr.260md.net/consultarTodos2.php",
                data:"",
                success: todosActualizar2
             });
@@ -296,7 +296,7 @@
         var Id =  parseInt($("#idActuc2").val());
         $.ajax({
             type:"POST",
-            url:"consultaUno2.php",
+            url:"http://lizbethcr.260md.net/consultaUno2.php",
             data:"Id="+Id,
             success: actuDatos2
             });
@@ -329,7 +329,7 @@
                 }else{
                 $.ajax({
                    type:"POST",
-                   url:"actualizar2.php",
+                   url:"http://lizbethcr.260md.net/actualizar2.php",
                    data:"Id="+ID+"&colorr="+colorr+"&marcaa="+marcaa+"&tallaa="+tallaa,
                    success: actualizarDatoss2
                 });
